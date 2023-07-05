@@ -1,8 +1,8 @@
 app: gitlab-webhook
 gateway:
-  enable: true
-  host: webhook.example.com
+  enable: false
+  host: dev-gitlab-webhook.eminxing.com
 env:
-  gitlab_server_url: https://gitlab.com
-  gitlab_private_token: xxx
-  openai_apikey: xxx
+  gitlab_server_url: https://git.eminxing.com
+  gitlab_private_token: tJhsV4_Y73DzoAx1aNse
+  openai_apikey: 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

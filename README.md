@@ -38,9 +38,9 @@ helm install gitlab-webhook ./helm
 
 ``` sh
 # 设置环境变量
-GITLAB_SERVER_URL=<Gitlab Address>
-GITLAB_PRIVATE_TOKEN=<Gitlab PriateToken>
-OPENAI_API_KEY=<OpenAPI Key>
+export GITLAB_SERVER_URL=<Gitlab Address>
+export GITLAB_PRIVATE_TOKEN=<Gitlab PriateToken>
+export OPENAI_API_KEY=<OpenAPI Key>
 # 启动服务
 python3 app.py
 ```
