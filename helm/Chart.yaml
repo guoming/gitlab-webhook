@@ -1,0 +1,5 @@
+apiVersion: v2
+name: gitlab-webhook
+version: 1.0.0
+appVersion: 1.10.0
+kubeVersion: ">=1.17.0-0"

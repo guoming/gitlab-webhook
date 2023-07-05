@@ -1,0 +1,8 @@
+app: gitlab-webhook
+gateway:
+  enable: true
+  host: webhook.example.com
+env:
+  gitlab_server_url: https://gitlab.com
+  gitlab_private_token: xxx
+  openai_apikey: xxx

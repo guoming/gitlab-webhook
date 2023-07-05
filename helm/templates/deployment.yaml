@@ -1,0 +1,64 @@
+kind: Deployment
+apiVersion: apps/v1
+metadata:
+  name: {{ .Values.app }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.app }}
+  annotations:
+    deployment.kubernetes.io/revision: '1'
+    kubesphere.io/creator: admin
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: {{ .Values.app }}
+  template:
+    metadata:
+      creationTimestamp: null
+      labels:
+        app.kubernetes.io/name: {{ .Values.app }}
+    spec:
+      containers:
+        - name: {{ .Values.app }}
+          image: geniusming/gitlab-webhook:latest
+          ports:
+            - name: tcp-8000
+              containerPort: 8000
+              protocol: TCP
+          env:
+            - name: GITLAB_SERVER_URL
+              value: {{ .Values.env.gitlab_server_url }}
+            - name: GITLAB_PRIVATE_TOKEN
+              value: {{ .Values.env.gitlab_private_token }}
+            - name: OPENAI_API_KEY
+              value: {{ .Values.env.openai_apikey }}
+      restartPolicy: Always
+  strategy:
+    type: RollingUpdate
+    rollingUpdate:
+      maxUnavailable: 25%
+      maxSurge: 25%
+  revisionHistoryLimit: 10
+  progressDeadlineSeconds: 600
+
+---
+kind: Service
+apiVersion: v1
+metadata:
+  name: {{ .Values.app }}
+  labels:
+    app.kubernetes.io/name: {{ .Values.app }}
+  annotations:
+    kubesphere.io/alias-name: {{ .Values.app }}
+    kubesphere.io/creator: admin
+    kubesphere.io/serviceType: statefulservice
+spec:
+  ports:
+    - name: tcp-80
+      protocol: TCP
+      port: 80
+      targetPort: 8000
+  selector:
+    app.kubernetes.io/name: {{ .Values.app }}
+  type: ClusterIP
+  sessionAffinity: None
