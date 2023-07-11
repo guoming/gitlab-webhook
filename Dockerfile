@@ -14,5 +14,6 @@ RUN pip3 install --no-cache-dir -r requirements.txt
 ENV GITLAB_SERVER_URL=http://gitlab.com
 ENV GITLAB_PRIVATE_TOKEN=xxx
 ENV OPENAI_API_KEY=xxx
+ENV OPENAI_OPEN=0
 
 ENTRYPOINT ["python3", "app.py"]

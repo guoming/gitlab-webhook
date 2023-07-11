@@ -32,6 +32,8 @@ spec:
               value: {{ .Values.env.gitlab_private_token }}
             - name: OPENAI_API_KEY
               value: {{ .Values.env.openai_apikey }}
+            - name: OPENAI_OPEN
+              value: {{ .Values.env.openai_open }}
       restartPolicy: Always
   strategy:
     type: RollingUpdate

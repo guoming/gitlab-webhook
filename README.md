@@ -41,6 +41,7 @@ helm install gitlab-webhook ./helm
 export GITLAB_SERVER_URL=<Gitlab Address>
 export GITLAB_PRIVATE_TOKEN=<Gitlab PriateToken>
 export OPENAI_API_KEY=<OpenAPI Key>
+export OPENAI_OPEN=1
 # 启动服务
 python3 app.py
 ```

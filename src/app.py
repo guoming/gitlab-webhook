@@ -1,6 +1,6 @@
 from flask import Flask, request
 import libs.ai
-import config.bootstrap
+import config
 import libs.feishu
 
 app = Flask(__name__)
@@ -22,39 +22,42 @@ def handle_merge_request(group):
         merge_request = payload['object_attributes']
 
         # 项目ID
-        project_id = payload["project"]["id"];
+        project_id = payload["project"]["id"]
 
         # 项目地址
-        repo_url = payload["project"]["git_http_url"];
+        repo_url = payload["project"]["git_http_url"]
 
         # 用户名称
-        user_name = payload["user"]["name"];
+        user_name = payload["user"]["name"]
 
         # 目标分支
-        target_branch = payload["object_attributes"]["target_branch"];
+        target_branch = payload["object_attributes"]["target_branch"]
 
         # 源分支
-        source_branch = payload["object_attributes"]["source_branch"];
+        source_branch = payload["object_attributes"]["source_branch"]
 
         # 状态
-        state = payload["object_attributes"]["state"];
+        state = payload["object_attributes"]["state"]
 
         # 合并请求地址
-        merge_request_url = payload["object_attributes"]["url"];
+        merge_request_url = payload["object_attributes"]["url"]
 
         # 合并请求ID
         merge_request_id = payload["object_attributes"]["iid"]
 
-        #AI自动代码评审
-        acr = libs.ai.AICodeReview(gitlab_server_url=config.bootstrap.gitlab_server_url,
-                           gitlab_private_token=config.bootstrap.gitlab_private_token,
-                           project_id=project_id,
-                           merge_request_id=merge_request_id,
-                           openai_api_key=config.bootstrap.openai_api_key)
-        acr.ai_code_review()
-        acr.comment()
+        if config.openai_open == 0:
+            print("openai_open is 0, skip ai code review")
+        else:
+            # AI自动代码评审
+            acr = libs.ai.AICodeReview(gitlab_server_url=config.gitlab_server_url,
+                                       gitlab_private_token=config.gitlab_private_token,
+                                       project_id=project_id,
+                                       merge_request_id=merge_request_id,
+                                       openai_api_key=config.openai_api_key)
+            acr.ai_code_review()
+            acr.comment()
 
-        #发送飞书消息
+        # 发送飞书消息
         card_data = {
             "repo_url": repo_url,
             "user_name": user_name,

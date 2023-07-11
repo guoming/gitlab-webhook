@@ -5,4 +5,5 @@ gateway:
 env:
   gitlab_server_url: <gitlab_server_url>
   gitlab_private_token: <gitlab_private_token>
-  openai_apikey: <openai_apikey>
+  openai_api_key: <openai_apikey>
+  openai_open: 1
