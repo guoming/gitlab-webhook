@@ -45,7 +45,7 @@ def handle_merge_request(group):
         # 合并请求ID
         merge_request_id = payload["object_attributes"]["iid"]
 
-        if config.openai_open == 0:
+        if config.openai_open == '0':
             print("openai_open is 0, skip ai code review")
         else:
             # AI自动代码评审
